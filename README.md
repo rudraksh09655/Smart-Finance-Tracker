@@ -1,4 +1,4 @@
-#Smart Finance Tracker
+# Smart Finance Tracker
 
 A full-stack web application for personal finance management, featuring a dynamic dashboard, transaction tracking, and budgeting. This project was built from scratch with a Python/Flask backend and a vanilla HTML, CSS, and JavaScript frontend, designed to be both functional and visually impressive.
 
