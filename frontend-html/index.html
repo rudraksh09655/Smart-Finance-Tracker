@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="text-slate-300">
+
+    <div id="auth-container" class="min-h-screen flex flex-col justify-center items-center p-4">
+        <!-- Login Form -->
+        <div id="login-view" class="w-full max-w-md">
+            <div class="bg-[#0D1117] border border-slate-800 p-8 rounded-2xl">
+                <h2 class="text-3xl font-bold text-center text-white mb-6">Sign In</h2>
+                <form id="login-form" class="space-y-6">
+                    <input type="email" id="login-email" class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white" placeholder="Email" required />
+                    <input type="password" id="login-password" class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white" placeholder="Password" required />
+                    <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-lg hover:bg-indigo-700 transition-colors">Login</button>
+                </form>
+                <p class="text-center text-sm text-slate-400 mt-6">
+                    No account? <button id="show-register-btn" class="font-medium text-indigo-400 hover:underline">Create one</button>
+                </p>
+            </div>
+        </div>
+
+        <!-- Register Form -->
+        <div id="register-view" class="w-full max-w-md hidden">
+            <div class="bg-[#0D1117] border border-slate-800 p-8 rounded-2xl">
+                <h2 class="text-3xl font-bold text-center text-white mb-6">Create Account</h2>
+                <form id="register-form" class="space-y-6">
+                    <input type="email" id="register-email" class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white" placeholder="Email" required />
+                    <input type="password" id="register-password" class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white" placeholder="Password" required />
+                    <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-lg hover:bg-indigo-700 transition-colors">Register</button>
+                </form>
+                <p class="text-center text-sm text-slate-400 mt-6">
+                    Already have an account? <button id="show-login-btn" class="font-medium text-indigo-400 hover:underline">Log In</button>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="dashboard-page" class="hidden h-screen bg-[#161B22]">
+        <div class="flex h-full">
+            <aside class="w-64 bg-[#0D1117] flex flex-col p-4 border-r border-slate-800">
+                <div class="flex items-center mb-10">
+                    <img id="user-avatar" src="https://placehold.co/48x48/334155/E2E8F0?text=U" alt="User Avatar" class="w-12 h-12 rounded-full mr-4" />
+                    <span id="user-name" class="font-semibold text-lg text-white">User</span>
+                </div>
+                <nav class="flex-grow">
+                    <ul>
+                        <li class="mb-2"><a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-slate-800 text-white"><span>Home</span></a></li>
+                    </ul>
+                </nav>
+                <div class="mt-auto">
+                     <button id="logout-btn" class="flex items-center space-x-3 w-full px-4 py-3 rounded-lg text-red-400 hover:bg-red-900/50 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </aside>
+
+<!-- Replace the existing <main> section with this code -->
+<main class="flex-1 p-8 overflow-y-auto w-full">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div class="lg:col-span-3 space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-[#0D1117] p-6 rounded-xl border border-slate-800">
+                    <h3 class="text-lg font-semibold text-white mb-4">Pending Tasks</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex justify-between items-center"><span>Pending Approvals</span><span class="font-semibold text-white">5</span></li>
+                        <li class="flex justify-between items-center"><span>New Trips Registered</span><span class="font-semibold text-white">1</span></li>
+                        <li class="flex justify-between items-center"><span>Unreported Expenses</span><span class="font-semibold text-white">4</span></li>
+                    </ul>
+                </div>
+                <div class="bg-[#0D1117] p-6 rounded-xl border border-slate-800">
+                    <h3 class="text-lg font-semibold text-white mb-4">Quick Stats</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex justify-between items-center"><span>Total Income</span><span id="stats-income" class="font-semibold text-green-400">$0.00</span></li>
+                        <li class="flex justify-between items-center"><span>Total Expenses</span><span id="stats-expenses" class="font-semibold text-red-400">$0.00</span></li>
+                        <li class="flex justify-between items-center"><span>Balance</span><span id="stats-balance" class="font-semibold text-white">$0.00</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="bg-[#0D1117] p-6 rounded-xl border border-slate-800">
+                <h3 class="text-lg font-semibold text-white mb-4">Monthly Report</h3>
+                <div style="height: 250px;"><canvas id="spending-trend-chart"></canvas></div>
+            </div>
+        </div>
+        <div class="lg:col-span-1 space-y-8">
+            <div class="bg-[#0D1117] p-6 rounded-xl border border-slate-800">
+                <h3 class="text-lg font-semibold text-white mb-4">Recent Transactions</h3>
+                <table class="w-full text-left text-sm">
+                    <thead><tr class="border-b border-slate-800 text-slate-400"><th class="py-2 font-normal">Subject</th><th class="py-2 font-normal text-right">Amount</th><th class="py-2 font-normal text-center">Actions</th></tr></thead>
+                    <tbody id="recent-expenses-body"></tbody>
+                </table>
+            </div>
+            <div class="bg-[#0D1117] p-6 rounded-xl border border-slate-800">
+                <h3 class="text-lg font-semibold text-white mb-4">Expense Breakdown</h3>
+                <div class="mx-auto" style="height: 220px; width: 220px;"><canvas id="day-to-day-chart"></canvas></div>
+            </div>
+        </div>
+    </div>
+    <!-- Quick Access -->
+<div class="mt-8 bg-[#0D1117] p-6 rounded-xl border border-slate-800 w-full">
+    <h3 class="text-lg font-semibold text-white mb-4">Quick Access</h3>
+    <div class="grid grid-cols-2 lg:grid-cols-6 gap-4">
+        <button id="add-transaction-btn" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold py-3 rounded-lg transition-colors">+ Add Transaction</button>
+        <!-- ADD THIS LINE -->
+        <button id="set-budget-btn" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold py-3 rounded-lg transition-colors">Set Budget</button>
+    </div>
+</div>
+</main>
+        </div>
+    </div>
+
+    <div id="transaction-modal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center">
+        <div class="bg-[#0D1117] p-8 rounded-2xl border border-slate-800 w-full max-w-md">
+            <h2 id="modal-title" class="text-2xl font-bold text-white mb-6">Add New Transaction</h2>
+            <form id="transaction-form" class="space-y-4">
+                <input type="hidden" id="transaction-id">
+                <input type="number" id="transaction-amount" placeholder="Amount" class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white" required />
+                <input type="text" id="transaction-category" placeholder="Category" class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white" required />
+                <input type="text" id="transaction-description" placeholder="Description (Optional)" class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white" />
+                <div class="flex items-center space-x-4 text-white">
+                    <label><input type="radio" name="type" value="expense" checked class="mr-2">Expense</label>
+                    <label><input type="radio" name="type" value="income" class="mr-2">Income</label>
+                </div>
+                <div class="flex justify-end space-x-4 pt-2">
+                    <button type="button" id="cancel-btn" class="px-6 py-2 bg-slate-700 text-slate-300 font-semibold rounded-lg hover:bg-slate-600 transition-colors">Cancel</button>
+                    <button type="submit" class="px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Set Budget Modal -->
+<div id="budget-modal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
+    <div class="bg-[#0D1117] p-8 rounded-2xl border border-slate-800 w-full max-w-md">
+        <h2 class="text-2xl font-bold text-white mb-6">Set Budget</h2>
+        <form id="budget-form" class="space-y-4">
+            <input type="text" id="budget-category" placeholder="Category (e.g., Groceries)" class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white" required />
+            <input type="number" id="budget-amount" placeholder="Amount" class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white" required />
+            <div class="flex justify-end space-x-4 pt-2">
+                <button type="button" id="cancel-budget-btn" class="px-6 py-2 bg-slate-700 text-slate-300 font-semibold rounded-lg hover:bg-slate-600 transition-colors">Cancel</button>
+                <button type="submit" class="px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors">Set</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+    <script src="script.js"></script>
+</body>
+</html>

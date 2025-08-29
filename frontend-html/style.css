@@ -1,0 +1,40 @@
+body {
+    background-color: #111827;
+    font-family: sans-serif;
+}
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  gap: 20px;
+}
+
+.recent-transactions {
+  grid-column: span 1;
+}
+
+.expense-breakdown {
+  grid-column: span 1;
+}
+.recent-transactions table {
+  width: 100%;
+}
+.recent-transactions {
+  flex: 1; /* or width: 100% */
+}
+.main-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.recent-transactions {
+  flex: 2; /* takes more space */
+}
+
+.expense-breakdown {
+  flex: 1; /* smaller proportional width */
+}
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #1e293b; }
+::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #64748b; }
