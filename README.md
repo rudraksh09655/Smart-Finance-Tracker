@@ -41,7 +41,7 @@ Chart.js: For creating interactive and visually appealing data charts.
 Getting Started
 To get a local copy up and running, follow these simple steps.
 
-Prerequisites
+# Prerequisites
 Python 3.8+
 
 pip
