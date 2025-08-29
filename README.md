@@ -2,7 +2,7 @@
 
 A full-stack web application for personal finance management, featuring a dynamic dashboard, transaction tracking, and budgeting. This project was built from scratch with a Python/Flask backend and a vanilla HTML, CSS, and JavaScript frontend, designed to be both functional and visually impressive.
 
-Key Features
+# Key Features
 Secure Authentication: Full registration and login system using a RESTful API with JSON Web Token (JWT) based authentication to ensure user data is private and secure.
 
 Interactive Dashboard: A professional, data-rich UI built with Tailwind CSS. It features multiple interactive charts (using Chart.js) to visualize expense breakdowns and spending trends in real-time.
@@ -13,8 +13,8 @@ Full CRUD Functionality: Users have complete control to add, view, edit, and del
 
 Permanent Data Storage: The backend uses a professional database migration workflow with Flask-Migrate, allowing for schema updates without any loss of user data.
 
-Technology Stack
-Backend
+# Technology Stack
+# Backend
 Python: The core language for server-side logic.
 
 Flask: A micro web framework used to build the RESTful API.
@@ -27,7 +27,7 @@ SQLite: The database for storing user and transaction data.
 
 JSON Web Tokens (JWT): For secure user authentication.
 
-Frontend
+# Frontend
 HTML5: For the core structure and content.
 
 CSS3: For custom styling.
